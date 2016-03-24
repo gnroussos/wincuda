@@ -140,7 +140,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		hBotBar = CreateWindow(STATUSCLASSNAME, NULL, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hWnd, NULL, hInstance, NULL);
 		SendMessage(hBotBar, SB_SETPARTS, (WPARAM)2, (LPARAM)parts);
 	
-		SendMessage(hBotBar, SB_SETTEXT, 0, (LPARAM)barText[0]);
+		SendMessage(hBotBar, SB_SETTEXT, 0, (LPARAM)barText[1]);
 		break;
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
