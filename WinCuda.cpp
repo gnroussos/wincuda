@@ -211,26 +211,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			error = cudaGetLastError();
 			if (error != cudaSuccess)
 			{
-				MessageBox(NULL, "cuda failed", (LPCSTR)error, MB_OK);
+				TCHAR errMsg[10];
+				sprintf(errMsg, "%d", error);
+				MessageBox(NULL,errMsg, "cuda failed", MB_OK);
 				return error;
 			}
-
-			sprintf(str, "%.3f", time);
-			msg.insert(0, barText[2]);
-			msg.append(str);
-			msg.append(_T(" seconds"));
 		}
 		else
 		{
 			StartTimer();
 			runCPU(mem_bitmap, (unsigned int)DIM, (unsigned int)DIM);
 			time = StopTimer();
-
-			sprintf(str, "%.3f", time);
-			msg.insert(0, barText[2]);
-			msg.append(str);
-			msg.append(_T(" seconds"));
 		}
+		
+		sprintf(str, "%.3f", time);
+		msg.insert(0, barText[2]);
+		msg.append(str);
+		msg.append(_T(" seconds"));
 		
 		BITMAPINFOHEADER bmInfoHdr;
 
@@ -312,7 +309,8 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		error = cudaGetLastError();
 		if (error != cudaSuccess)
 		{
-			MessageBox(NULL, "cuda failed", (LPCSTR)error, MB_OK);
+			sprintf(str, "%d", error);
+			MessageBox(NULL,str, "cuda failed", MB_OK);
 			return error;
 		}
 		// print details
