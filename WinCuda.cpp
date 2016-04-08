@@ -106,7 +106,7 @@ BOOL InitInstance()
    }
 
    ShowWindow(hWnd, SW_SHOWDEFAULT);
-   //UpdateWindow(hWnd);
+   UpdateWindow(hWnd);
 
    return TRUE;
 }
@@ -130,7 +130,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_CREATE:
-		// init global behaviour
+		// initialize global behaviour
 		enable_GPU = false;
 		
 		frequency = 1.0 / GetFrequency();
@@ -139,13 +139,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 		hBotBar = CreateWindow(STATUSCLASSNAME, NULL, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hWnd, NULL, hInstance, NULL);
 		SendMessage(hBotBar, SB_SETPARTS, (WPARAM)2, (LPARAM)parts);
-	
 		SendMessage(hBotBar, SB_SETTEXT, 0, (LPARAM)barText[1]);
 		break;
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);
-		// Parse the menu selections: 
+		// Parse menu selections
 		switch (wmId)
 		{
 		case IDM_ABOUT:
@@ -320,7 +319,8 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		sprintf(str, "%d.%d", prop.major, prop.minor);
 		SetDlgItemText(hDlg, IDC_STATIC_Ver, str);
 		SetDlgItemInt(hDlg, IDC_STATIC_Clock, prop.clockRate, FALSE);
-		SetDlgItemInt(hDlg, IDC_STATIC_Memory, prop.totalGlobalMem, FALSE);
+		sprintf(str, "%d MB", prop.totalGlobalMem / 1024);
+		SetDlgItemText(hDlg, IDC_STATIC_Memory, str);
 		SetDlgItemInt(hDlg, IDC_STATIC_Multi, prop.multiProcessorCount, FALSE);
 		SetDlgItemInt(hDlg, IDC_STATIC_Async, prop.asyncEngineCount, FALSE);
 		

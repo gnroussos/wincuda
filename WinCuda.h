@@ -21,5 +21,5 @@
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
-#define DIM 1000
+#define DIM 1024
 

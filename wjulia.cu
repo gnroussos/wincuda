@@ -47,9 +47,10 @@ __device__ int julia(int x, int  y)
 }
 __global__ void kernel(unsigned char *ptr)
 {
-	int x = blockIdx.x;
-	int y = blockIdx.y;
-	int  offset = x + y * gridDim.x;
+	int x = threadIdx.x + blockIdx.x * blockDim.x;
+	int y = threadIdx.y + blockIdx.y * blockDim.y;
+
+	int  offset = x + y * gridDim.x * blockDim.x ;
 
 	int value = julia(x, y);
 
@@ -66,9 +67,10 @@ extern "C" void runCuda(unsigned char *dev_bitmap, unsigned char *mem_bitmap, un
 
 	cudaMalloc((void**)&dev_bitmap, size);
 
-	dim3 grid(DIM, DIM);
+	dim3 grid(DIM/16, DIM/16);
+	dim3 threads(16, 16);
 
-	kernel <<<grid, 1 >>>(dev_bitmap);
+	kernel <<<grid, threads>>>(dev_bitmap);
 
 	cudaMemcpy(mem_bitmap, dev_bitmap, size, cudaMemcpyDeviceToHost);
 
@@ -76,5 +78,5 @@ extern "C" void runCuda(unsigned char *dev_bitmap, unsigned char *mem_bitmap, un
 	if (error != cudaSuccess)
 	cout << "cuda failed to run, error= " << error <<endl;*/
 }
-
+ 
 
