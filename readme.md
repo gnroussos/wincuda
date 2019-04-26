@@ -6,7 +6,7 @@ Demo of Julia algorithm using cuda (if supported by the GPU), to compute a 1024 
 
 Cuda version utilizes 64 kernels by 16 threads each.
 
-###Features
+### Features
 
 Menu item `Settings` selects the version of the algorithm.<br>
 A status bar at the bottom of the window displays the version and the computation time. For comparison reasons, the image is drawn in different colors, <span style="color:white">white</span> for GPU,
